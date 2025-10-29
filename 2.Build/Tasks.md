@@ -57,13 +57,13 @@
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-    name: build-demo
+      name: build-demo
     spec:
-    replicas: 1
-    selector:
+      replicas: 1
+      selector:
         matchLabels:
         app: build-demo
-    template:
+      template:
         metadata:
         labels:
             app: build-demo
