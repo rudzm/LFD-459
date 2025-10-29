@@ -74,16 +74,16 @@
             ports:
             - containerPort: 8080
             readinessProbe:
-            httpGet:
+              httpGet:
                 path: /
                 port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 5
+              initialDelaySeconds: 5
+              periodSeconds: 5
             livenessProbe:
-            httpGet:
+              httpGet:
                 path: /
                 port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 10
+              initialDelaySeconds: 10
+              periodSeconds: 10
     ```
     </details>
