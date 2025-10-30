@@ -29,8 +29,8 @@
 	
     •	Why isn’t the configuration baked directly into the image?
 
-    <details>
-        <summary>Hint</summary>
+<details>
+    <summary>Hint</summary>
         
 ```yaml
 apiVersion: v1
@@ -82,7 +82,7 @@ spec:
       - name: shared-logs
         mountPath: /var/log/app
 ```
-    </details>
+</details>
 
 2. Modify the app container definition in design-demo so that it:
 
