@@ -36,51 +36,51 @@
     apiVersion: v1
     kind: Pod
     metadata:
-    name: design-demo
+      name: design-demo
     labels:
         app: checkout
         tier: backend
         env: dev
         team: workflows
     spec:
-    volumes:
-    - name: shared-logs
-        emptyDir: {}
-    initContainers:
-    - name: init-config
-        image: busybox
-        command: ["sh", "-c", "echo 'Boot at ' $(date) > /workdir/startup.txt"]
-        volumeMounts:
-        - name: shared-logs
-        mountPath: /workdir
-    containers:
-    - name: app
-        image: nginx:1.27
-        env:
-        - name: LOG_LEVEL
-        valueFrom:
-            configMapKeyRef:
-            name: app-config
-            key: LOG_LEVEL
-        - name: DB_USER
-        valueFrom:
-            secretKeyRef:
-            name: db-secret
-            key: DB_USER
-        - name: DB_PASS
-        valueFrom:
-            secretKeyRef:
-            name: db-secret
-            key: DB_PASS
-        volumeMounts:
-        - name: shared-logs
-        mountPath: /var/log/app
-    - name: log-sidecar
-        image: busybox
-        command: ["sh", "-c", "tail -F /var/log/app/startup.txt"]
-        volumeMounts:
-        - name: shared-logs
-        mountPath: /var/log/app
+      volumes:
+      - name: shared-logs
+          emptyDir: {}
+      initContainers:
+      - name: init-config
+          image: busybox
+          command: ["sh", "-c", "echo 'Boot at ' $(date) > /workdir/  startup.txt"]
+          volumeMounts:
+          - name: shared-logs
+          mountPath: /workdir
+      containers:
+      - name: app
+          image: nginx:1.27
+          env:
+          - name: LOG_LEVEL
+          valueFrom:
+              configMapKeyRef:
+              name: app-config
+              key: LOG_LEVEL
+          - name: DB_USER
+          valueFrom:
+              secretKeyRef:
+              name: db-secret
+              key: DB_USER
+          - name: DB_PASS
+          valueFrom:
+              secretKeyRef:
+              name: db-secret
+              key: DB_PASS
+          volumeMounts:
+          - name: shared-logs
+          mountPath: /var/log/app
+      - name: log-sidecar
+          image: busybox
+          command: ["sh", "-c", "tail -F /var/log/app/startup.txt"]
+          volumeMounts:
+          - name: shared-logs
+          mountPath: /var/log/app
     ```
     </details>
 
