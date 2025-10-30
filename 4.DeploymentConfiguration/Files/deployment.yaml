@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-demo
+  template:
+    metadata:
+      labels:
+        app: config-demo
+    spec:
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: data-pvc
+      - name: app-config-vol
+        configMap:
+          name: app-config
+      - name: secret-vol
+        secret:
+          secretName: db-secret
+      containers:
+      - name: app
+        image: nginx:1.27
+        volumeMounts:
+        - name: app-data
+          mountPath: /var/app/data
+        - name: app-config-vol
+          mountPath: /etc/app/config
+          readOnly: true
+        - name: secret-vol
+          mountPath: /etc/app/secret
+          readOnly: true
