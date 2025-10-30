@@ -48,28 +48,28 @@
           emptyDir: {}
       initContainers:
       - name: init-config
-          image: busybox
-          command: ["sh", "-c", "echo 'Boot at ' $(date) > /workdir/  startup.txt"]
-          volumeMounts:
-          - name: shared-logs
+        image: busybox
+        command: ["sh", "-c", "echo 'Boot at ' $(date) > /workdir/  startup.txt"]
+        volumeMounts:
+        - name: shared-logs
           mountPath: /workdir
       containers:
       - name: app
-          image: nginx:1.27
-          env:
-          - name: LOG_LEVEL
+        image: nginx:1.27
+        env:
+        - name: LOG_LEVEL
           valueFrom:
-              configMapKeyRef:
+            configMapKeyRef:
               name: app-config
               key: LOG_LEVEL
-          - name: DB_USER
+        - name: DB_USER
           valueFrom:
-              secretKeyRef:
+            secretKeyRef:
               name: db-secret
               key: DB_USER
-          - name: DB_PASS
+        - name: DB_PASS
           valueFrom:
-              secretKeyRef:
+            secretKeyRef:
               name: db-secret
               key: DB_PASS
           volumeMounts:
